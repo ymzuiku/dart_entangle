@@ -1,6 +1,6 @@
 name: entangle
 description: entangle is use Websocket web-server in dartVM. And you can use entangle-clien in Flutter.
-version: 0.0.1
+version: 0.0.2
 author: pillar<pillar@gmail.com>
 homepage: https://github.com/ymzuiku/dart-entangle
 

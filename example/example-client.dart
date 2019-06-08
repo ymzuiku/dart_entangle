@@ -1,45 +1,3 @@
-# entangle
-
-entangle 取至量子纠缠(Quantum Entanglement)
-
-entangle 是基于 websocket 运行在 dart VM 的服务端框架
-
-在 flutter 可以使用 entangle-client，与之配套的有 entangle-client 可以在客户端更简洁的调用 entangle, 并且处理好了短线重连等机制
-
-其他非 dart 语言的客户端亦可以直接使用 websocket 进行调用
-
-## Server:
-
-```dart
-import 'package:entangle/entangle.dart';
-
-class Context {
-  String name = 'i am a context data';
-}
-
-void main() async {
-  var entangle = Entangle({
-    'hello-world': hello,
-  }, context: Context());
-
-  entangle.listen(port: 5000, path: '/ws');
-}
-
-void hello(Context ctx, data, send) {
-  send({'msg': '${data['msg']}-world', 'ctx-name': ctx.name});
-
-  // if other == 100, send message at 1000ms ago
-  if (data['other'] == 100) {
-    Future.delayed(Duration(milliseconds: 1000), () {
-      send({'other': 'server take the initiative at 1000ms ago'});
-    });
-  }
-}
-```
-
-## client:
-
-```dart
 import 'package:entangle/entangle-client.dart';
 
 void clientApp() async {
@@ -95,4 +53,3 @@ void clientApp() async {
     });
   });
 }
-```
