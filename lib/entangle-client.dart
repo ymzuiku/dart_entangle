@@ -9,7 +9,6 @@ String _entangleController = 'c';
 
 class _EntangleClient {
   int sendReConnectMilliseconds = 500;
-  int heartMilliseconds = 2000;
   int autoConnectCount = 5;
   int _autoConnectingCount = 0;
   int _key = 0;
@@ -19,12 +18,12 @@ class _EntangleClient {
 
   WebSocket client;
 
-  void connectHeart() {
+  void connectHeart(int heartMilliseconds) {
     Future.delayed(Duration(milliseconds: heartMilliseconds), () {
       if (client.readyState != 1) {
         connect(lastConnectUrl);
       } else {
-        connectHeart();
+        connectHeart(heartMilliseconds);
       }
     });
   }

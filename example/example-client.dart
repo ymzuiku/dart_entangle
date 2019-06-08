@@ -6,6 +6,9 @@ void clientApp() async {
 
   await entangleClient.connect('ws://127.0.0.1:5000/ws');
 
+  // heart check at 1500ms, if connect.close, auto conect again;
+  entangleClient.connectHeart(1500);
+
   /// simple send data
   ///
   /// send, and wait server callback two message

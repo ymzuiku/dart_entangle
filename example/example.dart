@@ -16,6 +16,7 @@ void main() async {
   clientApp();
 }
 
+// controller example
 void hello(Context ctx, data, send) {
   send({'msg': '${data['msg']}-world', 'ctx-name': ctx.name});
 
