@@ -9,50 +9,66 @@ void clientApp() async {
   // heart check at 1500ms, if connect.close, auto conect again;
   entangleClient.connectHeart(1500);
 
-  /// simple send data
+  /// Simple send data, and wait server callback twice
   ///
-  /// send, and wait server callback two message
-  entangleClient.send('hello-world', {
-    "msg": "helloA",
-    "other": 100,
-  }, listen: (data, remove) {
-    print('client-get-msg-1: $data');
-  });
+  /// Example:
+  entangleClient.send(
+    controller: 'hello-world',
+    data: {
+      "msg": "helloA",
+      "other": 100,
+    },
+    listen: (data, remove) {
+      print('client-get-msg-1: $data');
+    },
+  );
 
-  ///  only run once listen ad every send();
+  ///  Only run once listen ad every send();
   ///
-  /// remove before listen once
-  entangleClient.send('hello-world', {
-    "msg": "helloB",
-    "other": false,
-  }, listen: (data, remove) {
-    print('client-get-msg-2: $data');
+  /// Example:
+  entangleClient.send(
+    controller: 'hello-world',
+    data: {
+      "msg": "helloB",
+      "other": false,
+    },
+    listen: (data, remove) {
+      print('client-get-msg-2: $data');
 
-    // remove this listen
-    remove();
-  });
+      // remove this listen
+      remove();
+    },
+  );
 
   /// timeOut Feature
   ///
-  /// timeout 5000ms, remove this Function listen
-  entangleClient.send('hello-world', {
-    "msg": "helloB",
-    "other": false,
-  }, listen: (data, clear) {
-    print('client-get-msg-2: $data');
-  }, timeOutMilliseconds: 5000);
+  /// Example:
+  entangleClient.send(
+    controller: 'hello-world',
+    data: {
+      "msg": "helloB",
+      "other": false,
+    },
+    listen: (data, clear) {
+      print('client-get-msg-2: $data');
+    },
+    timeOutMilliseconds: 5000,
+  );
 
   /// Auto connect again
   ///
-  /// close and connect:
+  /// Example:
   Future.delayed(Duration(milliseconds: 1500), () async {
     print('close');
     await entangleClient.client.close();
 
     // Auto connect at entangleClient.send;
-    entangleClient.send('hello-world', {"msg": "helloA"},
-        listen: (data, clear) {
-      print('client-get-msg-again: $data');
-    });
+    entangleClient.send(
+      controller: 'hello-world',
+      data: {"msg": "helloA"},
+      listen: (data, clear) {
+        print('client-get-msg-again: $data');
+      },
+    );
   });
 }

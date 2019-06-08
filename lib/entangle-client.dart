@@ -65,11 +65,15 @@ class _EntangleClient {
     return _key;
   }
 
-  Function send(String controllerKey, Map<String, dynamic> data,
-      {Function listen, int timeOutMilliseconds = 8000}) {
+  Function send({
+    String controller,
+    Map<String, dynamic> data,
+    Function listen,
+    int timeOutMilliseconds = 8000,
+  }) {
     int theKey = _updateSendKey();
-    if (!controllerKey.contains('.')) {
-      controllerKey = controllerKey + '.*';
+    if (!controller.contains('.')) {
+      controller = controller + '.*';
     }
 
     if (listen != null) {
@@ -77,7 +81,7 @@ class _EntangleClient {
     }
 
     data[_entangleType] = {};
-    data[_entangleType][_entangleController] = controllerKey;
+    data[_entangleType][_entangleController] = controller;
     data[_entangleType][_entangleKey] = theKey;
     String obj = json.encode(data);
     _add(obj);
